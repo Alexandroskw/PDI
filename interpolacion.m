@@ -1,5 +1,53 @@
-%% 1
+%% Practica 5 Interpolacion  
+%Lugo Garcia Julio Cesar 
+%Perez Facio Javier Alejadro 
+% Profesor: Boris Escalante Ramirez 
 clc; clear all; close all;
+
+%% 3
+im_data = imread("pentagon256x256.tif");
+subplot(2,2,1)
+imshow(im_data);
+title("Original Image")
+
+
+szImage = size(im_data);
+T = 2;
+T_4 = 4;
+
+im_DFT = fft2(im_data);
+
+subplot(2,2,2)
+colormap('gray')
+imagesc(log10(abs(fftshift(im_DFT))));
+title("DFT original image")
+
+A = zeros((T*szImage(1)),(T*szImage(2)));
+im_center = fftshift(im_DFT);
+szA=size(A);
+
+A(((szA(1)-szImage(1))/2)+1:(((szA(1)-szImage(1))/2)+1)+szImage(1)-1,((szA(2)-szImage(2))/2)+1:(((szA(2)-szImage(2))/2)+1)+szImage(2)-1)=im_center;
+
+im_shift1 = fftshift(A);
+im_t2x2 = abs(ifft2(im_shift1));
+
+
+subplot(2,2,3)
+colormap('gray')
+imagesc(log10(abs(fftshift(im_shift1))));
+title("DFT T = 2x2")
+
+B =zeros((T_4*szImage(1)),(T_4*szImage(2)));
+szB=size(B);
+B(((szB(1)-szImage(1))/2)+1:(((szB(1)-szImage(1))/2)+1)+szImage(1)-1,((szB(2)-szImage(2))/2)+1:(((szB(2)-szImage(2))/2)+1)+szImage(2)-1)=im_center;
+
+im_shift = fftshift(B);
+im_t4x4 = abs(ifft2(im_shift));
+
+subplot(2,2,4)
+colormap('gray')
+imagesc(log10(abs(fftshift(im_shift))));
+title("DFT T = 4x4")
 
 im_data = imread("pentagon256x256.tif");
 
@@ -269,7 +317,7 @@ colormap ('gray');
 imagesc(log10(abs(fftshift(dft))));
 title("4x4 Cubic")
 
-%% Zoom
+% Zoom
 
 dft = fft2(im_data);
 colormap ('gray');
