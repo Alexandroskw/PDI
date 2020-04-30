@@ -1,3 +1,4 @@
+%% 1
 clc; clear all; close all;
 
 im_data = imread("pentagon256x256.tif");
@@ -6,6 +7,7 @@ figure(1)
 imshow(im_data);
 title("Original Image")
 
+%2x2
 szImage = size(im_data);
 szImage2 = size(im_data);
 
@@ -40,8 +42,7 @@ colormap ('gray');
 imagesc(log10(abs(fftshift(dft))));
 title("2x2")
 
-%% 4x4
-
+% 4x4
 B1 = zeros(4*szImage(1), szImage(2));
 C1 = zeros((4*szImage(1)), (4*szImage(2)));
 
@@ -70,3 +71,40 @@ dft = fft2(C1);
 colormap ('gray');
 imagesc(log10(abs(fftshift(dft))));
 title("4x4")
+
+%% 2
+
+% Ord 0
+szImage_2 = size(im_data);
+szImage2_2 = size(im_data);
+
+B = zeros(2*szImage_2(1), szImage_2(2));
+C = zeros((2*szImage_2(1)), (2*szImage_2(2)));
+
+pos_2 = 1;
+cont_2 = 0;
+
+figure(2)
+for i=1:szImage_2(1)
+    pos_2 = i+cont_2;
+    B(pos_2,:) = im_data(i,:);
+    cont_2 = cont_2 + (2-1);
+end
+
+pos1_2 = 1;
+cont1_2 = 0;
+
+for i=1:szImage(2)
+    pos1 = i+cont1_2;
+    C(:, pos1_2) = B(:, i);
+    cont1_2 = cont1_2+(2-1);
+end
+
+inter_2 = uint8(conv2(C, [0 0], 'same'));
+dft = fft2(C);
+
+colormap ('gray');
+imagesc(log10(abs(fftshift(dft))));
+title("2x2")
+
+%Lineal
