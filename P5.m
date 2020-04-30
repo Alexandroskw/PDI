@@ -33,7 +33,7 @@ for i=1:szImage(2)
     cont1 = cont1+(2-1);
 end
 
-inter = uint8(conv2(C, [1 5], 'same'));
+inter = uint8(conv2(C, [1 1], 'same'));
 dft = fft2(C);
 
 colormap ('gray');
@@ -58,6 +58,15 @@ end
 p1 = 1;
 c1 = 0;
 
-for i=1:sZImage(2)
-    
+for i=1:szImage(2)
+    p1 = i+c1;
+    C1(:,p1) = B1(:,i);
+    c1 = c1+(4-1);
 end
+
+inter2 = uint8(conv2(C1, [1 1], 'same'));
+dft = fft2(C1);
+
+colormap ('gray');
+imagesc(log10(abs(fftshift(dft))));
+title("4x4")
