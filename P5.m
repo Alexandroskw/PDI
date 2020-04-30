@@ -9,29 +9,28 @@ title("Original Image")
 szImage = size(im_data);
 szImage2 = size(im_data);
 
-dsz = 2*szImage;
-dsz2 = 2*szImage2;
-
-B = zeros(dsz);
-C = zeros();
+B = zeros(2*szImage(1), szImage(2));
+C = zeros((2*szImage(1)), (2*szImage(2)));
 
 pos = 1;
 cont = 0;
 
 subplot(1, 2, 2)
-for i=1:szImage
+
+for i=1:szImage(1)
     pos = i+cont;
-    B(pos,:) = double(i);
+    B(pos,:) = im_data(i,:);
     cont = cont + (2-1);
-    ImF = fftshift(fft2(i));
 end
-Im = log(1.0 + ImF);
-imagesc(Im);
 
-%szB = size(B);
+szB = size(B);
 
-%for i=1:szB(2)
-%    pos = i+cont;
-%    C(:, pos) = B(:, i);
-%    cont = cont+(2-1);
-%end
+for i=1:szImage(2)
+    pos = i+cont;
+    C(:, pos) = B(:, i);
+    cont = cont+(2-1);
+end
+
+imagesc(C);
+colormap ('gray');
+title("2x2")
