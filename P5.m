@@ -78,16 +78,16 @@ title("4x4")
 szImage_2 = size(im_data);
 szImage2_2 = size(im_data);
 
-B = zeros(2*szImage_2(1), szImage_2(2));
-C = zeros((2*szImage_2(1)), (2*szImage_2(2)));
+B_2 = zeros(2*szImage_2(1), szImage_2(2));
+C_2 = zeros((2*szImage_2(1)), (2*szImage_2(2)));
 
 pos_2 = 1;
 cont_2 = 0;
 
-figure(2)
+figure(4)
 for i=1:szImage_2(1)
     pos_2 = i+cont_2;
-    B(pos_2,:) = im_data(i,:);
+    B_2(pos_2,:) = im_data(i,:);
     cont_2 = cont_2 + (2-1);
 end
 
@@ -95,16 +95,47 @@ pos1_2 = 1;
 cont1_2 = 0;
 
 for i=1:szImage(2)
-    pos1 = i+cont1_2;
-    C(:, pos1_2) = B(:, i);
+    pos1_1 = i+cont1_2;
+    C_2(:, pos1_2) = B_2(:, i);
     cont1_2 = cont1_2+(2-1);
 end
 
-inter_2 = uint8(conv2(C, [0 0], 'same'));
-dft = fft2(C);
+inter_2 = uint8(conv2(C_2, [0 0], 'same'));
+dft = fft2(C_2);
 
 colormap ('gray');
 imagesc(log10(abs(fftshift(dft))));
-title("2x2")
+title("2x2 ord 0")
 
-%Lineal
+%% Lineal
+szImageL = size(im_data);
+szImage2L = size(im_data);
+
+BL = zeros(2*szImageL(1), szImageL(2));
+CL = zeros((2*szImageL(1)), (2*szImageL(2)));
+
+posL = 1;
+contL = 0;
+
+figure(5)
+for i=1:szImageL(1)
+    posL = i+contL;
+    BL(posL,:) = im_data(i,:);
+    contL = contL + (2-1);
+end
+
+pos1L = 1;
+cont1L = 0;
+
+for i=1:szImageL(2)
+    pos1L = i+cont1L;
+    CL(:, pos1L) = BL(:, i);
+    cont1L = cont1L+(2-1);
+end
+
+interL = uint8(conv2(CL, [1 1], 'same'));
+dft = fft2(CL);
+
+colormap ('gray');
+imagesc(log10(abs(fftshift(dft))));
+title("2x2 Linear")
